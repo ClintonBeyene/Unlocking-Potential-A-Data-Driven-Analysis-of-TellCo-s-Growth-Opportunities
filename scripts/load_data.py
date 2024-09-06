@@ -2,6 +2,8 @@ import os
 import psycopg2
 import pandas as pd 
 from dotenv import load_dotenv
+import matplotlib.pyplot as plt
+from sqlalchemy import create_engine
 
 load_dotenv()
 
@@ -41,3 +43,21 @@ def load_data_from_postgres(query):
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
+    
+def check_missing_values(df):
+    missing_values = df.isnull().sum()
+    missing_values_df = missing_values[missing_values > 0].reset_index()
+    missing_values_df.columns = ['column_name', 'missing_count']
+    return missing_values_df
+
+def missing_percentage(df):
+    missing_percentatges = df.isnull().mean() * 100 
+    column_with_missing_values = missing_percentatges[missing_percentatges > 30].index.tolist()
+    return column_with_missing_values
+
+def save_df_to_postgres(df, table_name):
+    # Create an engine instance
+    engine = create_engine(f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
+
+    # Save DataFrame to PostgreSQL
+    df.to_sql(table_name, engine, if_exists='replace', index=False)
