@@ -37,4 +37,4 @@ This project aims to analyze TellCo, a mobile service provider, to identify grow
 ## Conclusion
 The Telecom Profit Analysis project leverages data-driven insights to inform investment decisions regarding TellCo. By analyzing user behavior, engagement, experience, and satisfaction, the project uncovers opportunities for growth and profitability in the telecommunications industry.
 
-## Author: Clinton
+## Author: Clinton Beyene
